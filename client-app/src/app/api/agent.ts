@@ -14,7 +14,7 @@ const requests = {
     get: (url: string) => axios.get(url).then(sleep(1000)).then(responseBody),
     post: (url: string, body: {}) => axios.post(url, body).then(sleep(1000)).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(sleep(1000)).then(responseBody),
-    del: (url: string) => axios.delete(url).then(sleep(1000)).then(responseBody)
+    del: (url: string) => axios.delete(url).then(sleep(100)).then(responseBody)
 }
 
 const Activities = {
