@@ -1,4 +1,6 @@
+using API.Middleware;
 using Application.Activities;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,16 +36,23 @@ namespace API
 
             services.AddMediatR(typeof(List.Handler).Assembly); //we have more than 1 handler but Assembly will look into List and get it all
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(cfg => 
+                {
+                    cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+                });
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //bai 128: add our Error handling middleware
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
             }
 
             //bai 8 huong dan to comment out this line below

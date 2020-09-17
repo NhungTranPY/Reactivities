@@ -33,6 +33,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(Create.Command command)
         {
+            // if (!ModelState.IsValid) //bai 122: adding validation in the API using Data Annotations
+            //     return BadRequest(ModelState);
             return await _mediator.Send(command);
         }
 
